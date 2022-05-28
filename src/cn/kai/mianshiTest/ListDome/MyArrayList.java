@@ -70,6 +70,62 @@ public class MyArrayList implements Serializable {
         }
     }
 
+    //通过下标获取对象
+    public Object get(int index){
+        rangeCheck(index);
+        return elementData[index];
+    }
+    //判断下标是否合法
+    private void rangeCheck(int index) {
+        if (index > size || index <0){
+            throw new IndexOutOfBoundsException("越界");
+        }
+    }
+
+    //根据对象获取下标
+    public int indexOf(Object o){
+        if (o == null){
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elementData[i])){
+                    return i;
+                }
+            }
+        }else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elementData[i])){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //根据下标更新对象
+    public Object set(int index,Object o){
+        rangeCheck(index);
+        Object oldValue  = elementData[index];
+        elementData[index] = o;
+        return oldValue;
+    }
+
+    //根据下标进行删除对象
+    public Object remove(int index){
+        rangeCheck(index);
+        Object oldValue = elementData[index];
+        //获取要删除后面元素的个数
+        int numMoved = size - index - 1;
+        //大于0才可以删除
+        if (numMoved > 0){
+            //从elementData的index下一个开始复制，复制到elementData的index处复制后面元素的个数
+            System.arraycopy(elementData,index + 1,elementData,index,numMoved);
+        }
+
+        //滞空数组最后一个
+        elementData[--size] = null;
+
+        return oldValue;
+    }
+
     public int getSize(){
         return this.size;
     }
